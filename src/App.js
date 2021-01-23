@@ -15,6 +15,7 @@ class App extends Component {
         <Router>
           <>
             <Navbar />
+
             <div className="container">
               <Switch>
                 <Route exact path="/" component={Index} />
