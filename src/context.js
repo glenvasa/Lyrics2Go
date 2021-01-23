@@ -4,6 +4,12 @@ import axios from "axios";
 const Context = React.createContext();
 
 export class Provider extends Component {
+  // track_list and heading are used in Tracks.js
+  // to display top 10 tracks initially and both will
+  // change based on the search component. Since these
+  // pieces of state are used in more than one component
+  // it makes sense to implement the state in the context api
+  // and NOT in any one individual component (like we did in Lyrics.js)
   state = {
     track_list: [],
     heading: "Top 10 Tracks",
@@ -12,11 +18,16 @@ export class Provider extends Component {
   componentDidMount() {
     axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=10
+        // can use place this directly before api url to avoid cors blocking
+        // but still returned an error due to too many requests
+        // as a result, I removed this and used cors-moesif chrome extension instead
+        // https://cors-anywhere.herokuapp.com/
+
+        `https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=10
         &country=us&f_has_lyrics=1&apikey=${process.env.REACT_APP_MM_KEY}`
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.setState({ track_list: res.data.message.body.track_list });
       })
       .catch((err) => console.error(err));
