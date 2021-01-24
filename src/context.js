@@ -3,6 +3,21 @@ import axios from "axios";
 
 const Context = React.createContext();
 
+const reducer = (state, action) => {
+  // just like in redux, we evaluate the action type
+  switch (action.type) {
+    case "SEARCH_TRACKS":
+      return {
+        ...state,
+        // the response we get in the Search component will be sent in the payload to change the track_list state in context api
+        track_list: action.payload,
+        heading: "Search Results",
+      };
+    default:
+      return state;
+  }
+};
+
 export class Provider extends Component {
   // track_list and heading are used in Tracks.js
   // to display top 10 tracks initially and both will
@@ -13,14 +28,16 @@ export class Provider extends Component {
   state = {
     track_list: [],
     heading: "Top 10 Tracks",
+    // we can call 'dispatch' from any Consumer component to manipulate the State
+    dispatch: (action) => this.setState((state) => reducer(state, action)),
   };
 
   componentDidMount() {
     axios
       .get(
-        // can use place this directly before api url to avoid cors blocking
-        // but still returned an error due to too many requests
-        // as a result, I removed this and used cors-moesif chrome extension instead
+        // can place this directly before api url to avoid cors blocking
+        // but still returned an error due to too many requests after awhile
+        // As a result, I removed this and used cors-moesif chrome extension instead
         // https://cors-anywhere.herokuapp.com/
 
         `https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=10
