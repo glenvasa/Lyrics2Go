@@ -63,10 +63,11 @@ class Lyrics extends Component {
             <li className="list-group-item">
               {/* Some songs don't have a listed genre so we will need to code a conditional rendering */}
               <strong>Song Genre</strong>:{" "}
-              {
-                track.primary_genres.music_genre_list[0].music_genre
-                  .music_genre_name
-              }
+              {track.primary_genres.music_genre_list === undefined ||
+              track.primary_genres.music_genre_list.length === 0
+                ? "N/A"
+                : track.primary_genres.music_genre_list[0].music_genre
+                    .music_genre_name}
             </li>
             <li className="list-group-item">
               <strong>Explicit Lyrics</strong>:{" "}
