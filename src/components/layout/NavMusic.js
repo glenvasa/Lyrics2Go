@@ -42,7 +42,9 @@ const NavMusic = ({ url }) => {
 
   return (
     <div>
-      <button onClick={toggle}>{playing ? "Pause" : "Play"}</button>
+      <button className="mt-2" onClick={toggle}>
+        {playing ? "Pause" : "Play"}
+      </button>
     </div>
   );
 };
