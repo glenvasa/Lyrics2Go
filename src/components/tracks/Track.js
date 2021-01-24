@@ -22,6 +22,7 @@ const Track = (props) => {
           <Link
             to={`lyrics/track/${track.track_id}`}
             className="btn btn-dark"
+            // className btn-block should render Link/button with full width but doesn't
             style={{ width: "100%" }}
           >
             <i className="fas fa-chevron-right"></i>View Lyrics
